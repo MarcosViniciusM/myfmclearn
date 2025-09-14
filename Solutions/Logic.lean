@@ -9,10 +9,14 @@ variable (P Q R : Prop)
 
 theorem doubleneg_intro :
   P → ¬ ¬ P  := by
-  sorry
+  intro h
+  intro d
+  apply d
+  exact h
 
 theorem doubleneg_elim :
   ¬ ¬ P → P  := by
+
   sorry
 
 theorem doubleneg_law :

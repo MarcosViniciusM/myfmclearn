@@ -16,7 +16,7 @@ theorem doubleneg_intro :
 
 theorem doubleneg_elim :
   ¬ ¬ P → P  := by
-
+  intro h
   sorry
 
 theorem doubleneg_law :
@@ -56,7 +56,13 @@ theorem conj_comm :
 
 theorem impl_as_disj_converse :
   (¬ P ∨ Q) → (P → Q)  := by
-  sorry
+  intro hor
+  intro p
+  rcases hor with hp | hq
+  have hd : False := hp p
+  contradiction
+
+  apply hq
 
 theorem disj_as_impl :
   (P ∨ Q) → (¬ P → Q)  := by

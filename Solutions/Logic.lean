@@ -30,12 +30,25 @@ theorem doubleneg_law :
 
 theorem disj_comm :
   (P ∨ Q) → (Q ∨ P)  := by
-  sorry
+  intro hor
+  rcases hor with hp | hq
+
+  right
+  apply hp
+
+  left
+  apply hq
 
 theorem conj_comm :
   (P ∧ Q) → (Q ∧ P)  := by
-  sorry
+  intro h
+  constructor
 
+  rcases h with ⟨hp, hq⟩
+  apply hq
+
+  rcases h with ⟨hp, hq⟩
+  apply hp
 
 ------------------------------------------------
 -- Interdefinability of →,∨
@@ -233,7 +246,7 @@ end propositional
 section predicate
 
 variable (U : Type)
-variable (P Q : U → Type)
+variable (P Q : U → Prop)
 
 
 ------------------------------------------------

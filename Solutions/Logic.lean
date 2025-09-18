@@ -66,8 +66,15 @@ theorem impl_as_disj_converse :
 
 theorem disj_as_impl :
   (P ∨ Q) → (¬ P → Q)  := by
-  sorry
+  intro hor
+  rcases hor with hp | hq
 
+  intro h
+  have hd : False := h hp
+  contradiction
+
+  intro h
+  apply hq
 
 ------------------------------------------------
 -- Contrapositive
@@ -75,10 +82,18 @@ theorem disj_as_impl :
 
 theorem impl_as_contrapositive :
   (P → Q) → (¬ Q → ¬ P)  := by
-  sorry
+  intro h
+  intro q
+  intro p
+  apply q
+  have qp : Q := h p
+  exact qp
 
 theorem impl_as_contrapositive_converse :
   (¬ Q → ¬ P) → (P → Q)  := by
+  intro qp
+  intro p
+
   sorry
 
 theorem contrapositive_law :
@@ -92,8 +107,14 @@ theorem contrapositive_law :
 
 theorem lem_irrefutable :
   ¬ ¬ (P ∨ ¬ P)  := by
-  sorry
+  intro pp
+  apply pp
 
+  right
+  intro p
+  apply pp
+  left
+  exact p
 
 ------------------------------------------------
 -- Peirce's law
@@ -101,8 +122,13 @@ theorem lem_irrefutable :
 
 theorem peirce_law_weak :
   ((P → Q) → P) → ¬ ¬ P  := by
-  sorry
-
+  intro pqp
+  intro pneg
+  apply pneg
+  apply pqp
+  intro pn
+  have neg : False := pneg pn
+  contradiction
 
 ------------------------------------------------
 -- Linearity of →
@@ -119,12 +145,28 @@ theorem impl_linear :
 
 theorem disj_as_negconj :
   P ∨ Q → ¬ (¬ P ∧ ¬ Q)  := by
-  sorry
+  intro pq
+  intro porq
+  rcases porq with ⟨hp, hq⟩
+  rcases pq with p | q
+  apply hp
+  apply p
+
+  apply hq
+  apply q
 
 theorem conj_as_negdisj :
   P ∧ Q → ¬ (¬ P ∨ ¬ Q)  := by
-  sorry
+  intro pq
+  intro neg
+  rcases pq with ⟨hp, hq⟩
+  rcases neg with p | q
 
+  apply p
+  apply hp
+
+  apply q
+  apply hq
 
 ------------------------------------------------
 -- De Morgan laws for ∨,∧
